@@ -26,6 +26,10 @@ type Client struct {
 	secret string
 	// User agent used when communicating with the Tyk API.
 	UserAgent string
+
+	// Services used for talking to different parts of the Tyk API.
+	APIs      *APIsService
+	HotReload *HotReloadService
 }
 
 // NewClient returns a new Tyk API client. To use API methods which require authentication,
@@ -51,6 +55,9 @@ func newClient(options ...ClientOptionFunc) (*Client, error) {
 	if err != nil {
 		return nil, err
 	}
+
+	c.APIs = &APIsService{client: c}
+	c.HotReload = &HotReloadService{client: c}
 
 	return c, nil
 }
