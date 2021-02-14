@@ -4,9 +4,12 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/angelokurtis/go-tyk/internal/log"
 	"io"
+	"moul.io/http2curl"
 	"net/http"
 	"net/url"
+	"path"
 	"strings"
 )
 
@@ -113,16 +116,16 @@ func (c *Client) PUT(path string, resp interface{}, payload interface{}) error {
 	return c.makeRequest("PUT", path, resp, payload)
 }
 
-func (c *Client) makeRequest(method, path string, resp interface{}, payload interface{}) error {
+func (c *Client) makeRequest(method, p string, resp interface{}, payload interface{}) error {
 	u := *c.baseURL
-	unescaped, err := url.PathUnescape(path)
+	unescaped, err := url.PathUnescape(p)
 	if err != nil {
 		return fmt.Errorf("failed to make request: %w", err)
 	}
 
 	// Set the encoded path data
-	u.RawPath = c.baseURL.Path + path
-	u.Path = c.baseURL.Path + unescaped
+	u.RawPath = path.Join(c.baseURL.Path + p)
+	u.Path = path.Join(c.baseURL.Path + unescaped)
 
 	// Create a request specific headers map.
 	headers := make(http.Header)
@@ -156,6 +159,8 @@ func (c *Client) makeRequest(method, path string, resp interface{}, payload inte
 		req.Header[k] = v
 	}
 
+	command, _ := http2curl.GetCurlCommand(req)
+	log.WithPrefix("request").Debug(command)
 	res, err := c.http.Do(req)
 	if err != nil {
 		return fmt.Errorf("failed to make request: %w", err)
