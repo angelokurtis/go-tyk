@@ -6,8 +6,8 @@ type HotReloadService struct {
 }
 
 type ReloadStatus struct {
-	Status  string `json:"status"`
-	Message string `json:"message"`
+	Status  string `json:"status,omitempty"`
+	Message string `json:"message,omitempty"`
 }
 
 // ReloadGroup restarts a Tyk Gateway Process.
