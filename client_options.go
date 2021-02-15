@@ -15,7 +15,7 @@ func WithBaseURL(urlStr string) ClientOptionFunc {
 	}
 }
 
-// WithDebug enables a very verbose logging
+// WithDebug enables a very verbose logging.
 func WithDebug() ClientOptionFunc {
 	return func(_ *Client) error {
 		log.SetLevel(logrus.DebugLevel)
