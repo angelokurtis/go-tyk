@@ -136,8 +136,9 @@ func (c *Client) makeRequest(method, p string, resp interface{}, payload interfa
 	// Create a request specific headers map.
 	headers := make(http.Header)
 	headers.Set("Accept", "application/json")
-	headers.Set("X-Tyk-Authorization", c.secret)
-
+	if c.secret != "" {
+		headers.Set("X-Tyk-Authorization", c.secret)
+	}
 	if c.UserAgent != "" {
 		headers.Set("User-Agent", c.UserAgent)
 	}
