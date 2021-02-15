@@ -1,5 +1,7 @@
 package tyk
 
+import "fmt"
+
 // APIsService handles communication with the APIs.
 type APIsService struct {
 	client *Client
@@ -7,83 +9,83 @@ type APIsService struct {
 
 // API represents an API.
 type API struct {
-	ID                         string            `json:"api_id,omitempty"`
-	Name                       string            `json:"name,omitempty"`
-	Slug                       string            `json:"slug,omitempty"`
-	ListenPort                 int               `json:"listen_port,omitempty"`
-	Protocol                   string            `json:"protocol,omitempty"`
-	EnableProxyProtocol        bool              `json:"enable_proxy_protocol,omitempty"`
-	OrgID                      string            `json:"org_id,omitempty"`
-	UseKeyless                 bool              `json:"use_keyless,omitempty"`
-	UseOauth2                  bool              `json:"use_oauth2,omitempty"`
-	UseOpenid                  bool              `json:"use_openid,omitempty"`
-	OpenIDOptions              *OpenIDOptions    `json:"openid_options,omitempty"`
-	OauthMeta                  *OAuthMeta        `json:"oauth_meta,omitempty"`
-	Auth                       *Auth             `json:"auth,omitempty"`
-	AuthConfigs                interface{}       `json:"auth_configs,omitempty"`
-	UseBasicAuth               bool              `json:"use_basic_auth,omitempty"`
-	BasicAuth                  *BasicAuth        `json:"basic_auth,omitempty"`
-	UseMutualTLSAuth           bool              `json:"use_mutual_tls_auth,omitempty"`
-	ClientCertificates         interface{}       `json:"client_certificates,omitempty"`
-	UpstreamCertificates       interface{}       `json:"upstream_certificates,omitempty"`
-	PinnedPublicKeys           interface{}       `json:"pinned_public_keys,omitempty"`
-	EnableJwt                  bool              `json:"enable_jwt,omitempty"`
-	UseStandardAuth            bool              `json:"use_standard_auth,omitempty"`
-	UseGoPluginAuth            bool              `json:"use_go_plugin_auth,omitempty"`
-	EnableCoprocessAuth        bool              `json:"enable_coprocess_auth,omitempty"`
-	JwtSigningMethod           string            `json:"jwt_signing_method,omitempty"`
-	JwtSource                  string            `json:"jwt_source,omitempty"`
-	JwtIdentityBaseField       string            `json:"jwt_identity_base_field,omitempty"`
-	JwtClientBaseField         string            `json:"jwt_client_base_field,omitempty"`
-	JwtPolicyFieldName         string            `json:"jwt_policy_field_name,omitempty"`
-	JwtDefaultPolicies         interface{}       `json:"jwt_default_policies,omitempty"`
-	JwtIssuedAtValidationSkew  int               `json:"jwt_issued_at_validation_skew,omitempty"`
-	JwtExpiresAtValidationSkew int               `json:"jwt_expires_at_validation_skew,omitempty"`
-	JwtNotBeforeValidationSkew int               `json:"jwt_not_before_validation_skew,omitempty"`
-	JwtSkipKid                 bool              `json:"jwt_skip_kid,omitempty"`
-	JwtScopeToPolicyMapping    interface{}       `json:"jwt_scope_to_policy_mapping,omitempty"`
-	JwtScopeClaimName          string            `json:"jwt_scope_claim_name,omitempty"`
-	Notifications              *Notifications    `json:"notifications,omitempty"`
-	EnableSignatureChecking    bool              `json:"enable_signature_checking,omitempty"`
-	HmacAllowedClockSkew       int               `json:"hmac_allowed_clock_skew,omitempty"`
-	HmacAllowedAlgorithms      interface{}       `json:"hmac_allowed_algorithms,omitempty"`
-	RequestSigning             *RequestSigning   `json:"request_signing,omitempty"`
-	BaseIdentityProvidedBy     string            `json:"base_identity_provided_by,omitempty"`
-	Definition                 *Definition       `json:"definition,omitempty"`
-	VersionData                *VersionData      `json:"version_data,omitempty"`
-	UptimeTests                *UptimeTests      `json:"uptime_tests,omitempty"`
-	Proxy                      *Proxy            `json:"proxy,omitempty"`
-	DisableRateLimit           bool              `json:"disable_rate_limit,omitempty"`
-	DisableQuota               bool              `json:"disable_quota,omitempty"`
-	CustomMiddleware           *CustomMiddleware `json:"custom_middleware,omitempty"`
-	CustomMiddlewareBundle     string            `json:"custom_middleware_bundle,omitempty"`
-	CacheOptions               *CacheOptions     `json:"cache_options,omitempty"`
-	SessionLifetime            int               `json:"session_lifetime,omitempty"`
-	Active                     bool              `json:"active,omitempty"`
-	Internal                   bool              `json:"internal,omitempty"`
-	AuthProvider               *AuthProvider     `json:"auth_provider,omitempty"`
-	SessionProvider            *SessionProvider  `json:"session_provider,omitempty"`
-	EventHandlers              *EventHandlers    `json:"event_handlers,omitempty"`
-	EnableBatchRequestSupport  bool              `json:"enable_batch_request_support,omitempty"`
-	EnableIPWhitelisting       bool              `json:"enable_ip_whitelisting,omitempty"`
-	AllowedIps                 interface{}       `json:"allowed_ips,omitempty"`
-	EnableIPBlacklisting       bool              `json:"enable_ip_blacklisting,omitempty"`
-	BlacklistedIps             interface{}       `json:"blacklisted_ips,omitempty"`
-	DontSetQuotaOnCreate       bool              `json:"dont_set_quota_on_create,omitempty"`
-	ExpireAnalyticsAfter       int               `json:"expire_analytics_after,omitempty"`
-	ResponseProcessors         interface{}       `json:"response_processors,omitempty"`
-	CORS                       *CORS             `json:"CORS,omitempty"`
-	Domain                     string            `json:"domain,omitempty"`
-	Certificates               interface{}       `json:"certificates,omitempty"`
-	DoNotTrack                 bool              `json:"do_not_track,omitempty"`
-	Tags                       interface{}       `json:"tags,omitempty"`
-	EnableContextVars          bool              `json:"enable_context_vars,omitempty"`
-	ConfigData                 interface{}       `json:"config_data,omitempty"`
-	TagHeaders                 interface{}       `json:"tag_headers,omitempty"`
-	GlobalRateLimit            *GlobalRateLimit  `json:"global_rate_limit,omitempty"`
-	StripAuthData              bool              `json:"strip_auth_data,omitempty"`
-	EnableDetailedRecording    bool              `json:"enable_detailed_recording,omitempty"`
-	GraphQL                    *GraphQL          `json:"graphql,omitempty"`
+	ID                         string           `json:"api_id,omitempty"`
+	Name                       string           `json:"name,omitempty"`
+	Slug                       string           `json:"slug,omitempty"`
+	ListenPort                 int              `json:"listen_port,omitempty"`
+	Protocol                   string           `json:"protocol,omitempty"`
+	EnableProxyProtocol        bool             `json:"enable_proxy_protocol,omitempty"`
+	OrgID                      string           `json:"org_id,omitempty"`
+	UseKeyless                 bool             `json:"use_keyless,omitempty"`
+	UseOauth2                  bool             `json:"use_oauth2,omitempty"`
+	UseOpenid                  bool             `json:"use_openid,omitempty"`
+	OpenIDOptions              OpenIDOptions    `json:"openid_options,omitempty"`
+	OauthMeta                  OAuthMeta        `json:"oauth_meta,omitempty"`
+	Auth                       Auth             `json:"auth,omitempty"`
+	AuthConfigs                interface{}      `json:"auth_configs,omitempty"`
+	UseBasicAuth               bool             `json:"use_basic_auth,omitempty"`
+	BasicAuth                  BasicAuth        `json:"basic_auth,omitempty"`
+	UseMutualTLSAuth           bool             `json:"use_mutual_tls_auth,omitempty"`
+	ClientCertificates         interface{}      `json:"client_certificates,omitempty"`
+	UpstreamCertificates       interface{}      `json:"upstream_certificates,omitempty"`
+	PinnedPublicKeys           interface{}      `json:"pinned_public_keys,omitempty"`
+	EnableJwt                  bool             `json:"enable_jwt,omitempty"`
+	UseStandardAuth            bool             `json:"use_standard_auth,omitempty"`
+	UseGoPluginAuth            bool             `json:"use_go_plugin_auth,omitempty"`
+	EnableCoprocessAuth        bool             `json:"enable_coprocess_auth,omitempty"`
+	JwtSigningMethod           string           `json:"jwt_signing_method,omitempty"`
+	JwtSource                  string           `json:"jwt_source,omitempty"`
+	JwtIdentityBaseField       string           `json:"jwt_identity_base_field,omitempty"`
+	JwtClientBaseField         string           `json:"jwt_client_base_field,omitempty"`
+	JwtPolicyFieldName         string           `json:"jwt_policy_field_name,omitempty"`
+	JwtDefaultPolicies         interface{}      `json:"jwt_default_policies,omitempty"`
+	JwtIssuedAtValidationSkew  int              `json:"jwt_issued_at_validation_skew,omitempty"`
+	JwtExpiresAtValidationSkew int              `json:"jwt_expires_at_validation_skew,omitempty"`
+	JwtNotBeforeValidationSkew int              `json:"jwt_not_before_validation_skew,omitempty"`
+	JwtSkipKid                 bool             `json:"jwt_skip_kid,omitempty"`
+	JwtScopeToPolicyMapping    interface{}      `json:"jwt_scope_to_policy_mapping,omitempty"`
+	JwtScopeClaimName          string           `json:"jwt_scope_claim_name,omitempty"`
+	Notifications              Notifications    `json:"notifications,omitempty"`
+	EnableSignatureChecking    bool             `json:"enable_signature_checking,omitempty"`
+	HmacAllowedClockSkew       int              `json:"hmac_allowed_clock_skew,omitempty"`
+	HmacAllowedAlgorithms      interface{}      `json:"hmac_allowed_algorithms,omitempty"`
+	RequestSigning             RequestSigning   `json:"request_signing,omitempty"`
+	BaseIdentityProvidedBy     string           `json:"base_identity_provided_by,omitempty"`
+	Definition                 Definition       `json:"definition,omitempty"`
+	VersionData                VersionData      `json:"version_data,omitempty"`
+	UptimeTests                UptimeTests      `json:"uptime_tests,omitempty"`
+	Proxy                      Proxy            `json:"proxy,omitempty"`
+	DisableRateLimit           bool             `json:"disable_rate_limit,omitempty"`
+	DisableQuota               bool             `json:"disable_quota,omitempty"`
+	CustomMiddleware           CustomMiddleware `json:"custom_middleware,omitempty"`
+	CustomMiddlewareBundle     string           `json:"custom_middleware_bundle,omitempty"`
+	CacheOptions               CacheOptions     `json:"cache_options,omitempty"`
+	SessionLifetime            int              `json:"session_lifetime,omitempty"`
+	Active                     bool             `json:"active,omitempty"`
+	Internal                   bool             `json:"internal,omitempty"`
+	AuthProvider               AuthProvider     `json:"auth_provider,omitempty"`
+	SessionProvider            SessionProvider  `json:"session_provider,omitempty"`
+	EventHandlers              EventHandlers    `json:"event_handlers,omitempty"`
+	EnableBatchRequestSupport  bool             `json:"enable_batch_request_support,omitempty"`
+	EnableIPWhitelisting       bool             `json:"enable_ip_whitelisting,omitempty"`
+	AllowedIps                 interface{}      `json:"allowed_ips,omitempty"`
+	EnableIPBlacklisting       bool             `json:"enable_ip_blacklisting,omitempty"`
+	BlacklistedIps             interface{}      `json:"blacklisted_ips,omitempty"`
+	DontSetQuotaOnCreate       bool             `json:"dont_set_quota_on_create,omitempty"`
+	ExpireAnalyticsAfter       int              `json:"expire_analytics_after,omitempty"`
+	ResponseProcessors         interface{}      `json:"response_processors,omitempty"`
+	CORS                       CORS             `json:"CORS,omitempty"`
+	Domain                     string           `json:"domain,omitempty"`
+	Certificates               interface{}      `json:"certificates,omitempty"`
+	DoNotTrack                 bool             `json:"do_not_track,omitempty"`
+	Tags                       interface{}      `json:"tags,omitempty"`
+	EnableContextVars          bool             `json:"enable_context_vars,omitempty"`
+	ConfigData                 interface{}      `json:"config_data,omitempty"`
+	TagHeaders                 interface{}      `json:"tag_headers,omitempty"`
+	GlobalRateLimit            GlobalRateLimit  `json:"global_rate_limit,omitempty"`
+	StripAuthData              bool             `json:"strip_auth_data,omitempty"`
+	EnableDetailedRecording    bool             `json:"enable_detailed_recording,omitempty"`
+	GraphQL                    GraphQL          `json:"graphql,omitempty"`
 }
 
 // OpenIDOptions represents the OpenID options.
@@ -111,14 +113,14 @@ type Signature struct {
 
 // Auth represents an auth.
 type Auth struct {
-	UseParam          bool       `json:"use_param,omitempty"`
-	ParamName         string     `json:"param_name,omitempty"`
-	UseCookie         bool       `json:"use_cookie,omitempty"`
-	CookieName        string     `json:"cookie_name,omitempty"`
-	AuthHeaderName    string     `json:"auth_header_name,omitempty"`
-	UseCertificate    bool       `json:"use_certificate,omitempty"`
-	ValidateSignature bool       `json:"validate_signature,omitempty"`
-	Signature         *Signature `json:"signature,omitempty"`
+	UseParam          bool      `json:"use_param,omitempty"`
+	ParamName         string    `json:"param_name,omitempty"`
+	UseCookie         bool      `json:"use_cookie,omitempty"`
+	CookieName        string    `json:"cookie_name,omitempty"`
+	AuthHeaderName    string    `json:"auth_header_name,omitempty"`
+	UseCertificate    bool      `json:"use_certificate,omitempty"`
+	ValidateSignature bool      `json:"validate_signature,omitempty"`
+	Signature         Signature `json:"signature,omitempty"`
 }
 
 type BasicAuth struct {
@@ -159,7 +161,7 @@ type Paths struct {
 type DefaultVersion struct {
 	Name                        string      `json:"name,omitempty"`
 	Expires                     string      `json:"expires,omitempty"`
-	Paths                       *Paths      `json:"paths,omitempty"`
+	Paths                       Paths       `json:"paths,omitempty"`
 	UseExtendedPaths            bool        `json:"use_extended_paths,omitempty"`
 	ExtendedPaths               interface{} `json:"extended_paths,omitempty"`
 	GlobalHeaders               interface{} `json:"global_headers,omitempty"`
@@ -172,13 +174,13 @@ type DefaultVersion struct {
 }
 
 type Versions struct {
-	Default *DefaultVersion `json:"Default,omitempty"`
+	Default DefaultVersion `json:"Default,omitempty"`
 }
 
 type VersionData struct {
-	NotVersioned   bool      `json:"not_versioned,omitempty"`
-	DefaultVersion string    `json:"default_version,omitempty"`
-	Versions       *Versions `json:"versions,omitempty"`
+	NotVersioned   bool     `json:"not_versioned,omitempty"`
+	DefaultVersion string   `json:"default_version,omitempty"`
+	Versions       Versions `json:"versions,omitempty"`
 }
 
 type ServiceDiscovery struct {
@@ -195,14 +197,14 @@ type ServiceDiscovery struct {
 }
 
 type Config struct {
-	ExpireAfter      int               `json:"expire_utime_after,omitempty"`
-	ServiceDiscovery *ServiceDiscovery `json:"service_discovery,omitempty"`
-	RecheckWait      int               `json:"recheck_wait,omitempty"`
+	ExpireAfter      int              `json:"expire_utime_after,omitempty"`
+	ServiceDiscovery ServiceDiscovery `json:"service_discovery,omitempty"`
+	RecheckWait      int              `json:"recheck_wait,omitempty"`
 }
 
 type UptimeTests struct {
 	CheckList interface{} `json:"check_list,omitempty"`
-	Config    *Config     `json:"config,omitempty"`
+	Config    Config      `json:"config,omitempty"`
 }
 
 type Transport struct {
@@ -214,16 +216,16 @@ type Transport struct {
 }
 
 type Proxy struct {
-	PreserveHostHeader          bool              `json:"preserve_host_header,omitempty"`
-	ListenPath                  string            `json:"listen_path,omitempty"`
-	TargetURL                   string            `json:"target_url,omitempty"`
-	DisableStripSlash           bool              `json:"disable_strip_slash,omitempty"`
-	StripListenPath             bool              `json:"strip_listen_path,omitempty"`
-	EnableLoadBalancing         bool              `json:"enable_load_balancing,omitempty"`
-	TargetList                  interface{}       `json:"target_list,omitempty"`
-	CheckHostAgainstUptimeTests bool              `json:"check_host_against_uptime_tests,omitempty"`
-	ServiceDiscovery            *ServiceDiscovery `json:"service_discovery,omitempty"`
-	Transport                   *Transport        `json:"transport,omitempty"`
+	PreserveHostHeader          bool             `json:"preserve_host_header,omitempty"`
+	ListenPath                  string           `json:"listen_path,omitempty"`
+	TargetURL                   string           `json:"target_url,omitempty"`
+	DisableStripSlash           bool             `json:"disable_strip_slash,omitempty"`
+	StripListenPath             bool             `json:"strip_listen_path,omitempty"`
+	EnableLoadBalancing         bool             `json:"enable_load_balancing,omitempty"`
+	TargetList                  interface{}      `json:"target_list,omitempty"`
+	CheckHostAgainstUptimeTests bool             `json:"check_host_against_uptime_tests,omitempty"`
+	ServiceDiscovery            ServiceDiscovery `json:"service_discovery,omitempty"`
+	Transport                   Transport        `json:"transport,omitempty"`
 }
 
 type AuthCheck struct {
@@ -240,13 +242,13 @@ type IDExtractor struct {
 }
 
 type CustomMiddleware struct {
-	Pre         interface{}  `json:"pre,omitempty"`
-	Post        interface{}  `json:"post,omitempty"`
-	PostKeyAuth interface{}  `json:"post_key_auth,omitempty"`
-	AuthCheck   *AuthCheck   `json:"auth_check,omitempty"`
-	Response    interface{}  `json:"response,omitempty"`
-	Driver      string       `json:"driver,omitempty"`
-	IDExtractor *IDExtractor `json:"id_extractor,omitempty"`
+	Pre         interface{} `json:"pre,omitempty"`
+	Post        interface{} `json:"post,omitempty"`
+	PostKeyAuth interface{} `json:"post_key_auth,omitempty"`
+	AuthCheck   AuthCheck   `json:"auth_check,omitempty"`
+	Response    interface{} `json:"response,omitempty"`
+	Driver      string      `json:"driver,omitempty"`
+	IDExtractor IDExtractor `json:"id_extractor,omitempty"`
 }
 
 type CacheOptions struct {
@@ -302,7 +304,7 @@ type GraphQL struct {
 	ExecutionMode           string      `json:"execution_mode,omitempty"`
 	Schema                  string      `json:"schema,omitempty"`
 	TypeFieldConfigurations interface{} `json:"type_field_configurations,omitempty"`
-	Playground              *Playground `json:"playground,omitempty"`
+	Playground              Playground  `json:"playground,omitempty"`
 }
 
 // ListAPIs gets a list of APIs.
@@ -316,16 +318,97 @@ func (s *APIsService) ListAPIs() ([]*API, error) {
 	return p, nil
 }
 
+// GetAPI gets a specific API, identified by ID.
+func (s *APIsService) GetAPI(id string) (*API, error) {
+	u := fmt.Sprintf("/api/%s", id)
+
+	p := new(API)
+	err := s.client.GET(u, p)
+	if err != nil {
+		return nil, err
+	}
+
+	return p, nil
+}
+
 type CreateAPIOptions struct {
-	ID          string       `json:"api_id,omitempty"`
-	Name        string       `json:"name,omitempty"`
-	Slug        string       `json:"slug,omitempty"`
-	OrgID       string       `json:"org_id,omitempty"`
-	Auth        *Auth        `json:"auth,omitempty"`
-	Definition  *Definition  `json:"definition,omitempty"`
-	VersionData *VersionData `json:"version_data,omitempty"`
-	Proxy       *Proxy       `json:"proxy,omitempty"`
-	Active      bool         `json:"active,omitempty"`
+	ID                         string           `json:"api_id,omitempty"`
+	Active                     bool             `json:"active,omitempty"`
+	AllowedIps                 interface{}      `json:"allowed_ips,omitempty"`
+	Auth                       Auth             `json:"auth,omitempty"`
+	AuthConfigs                interface{}      `json:"auth_configs,omitempty"`
+	AuthProvider               AuthProvider     `json:"auth_provider,omitempty"`
+	BaseIdentityProvidedBy     string           `json:"base_identity_provided_by,omitempty"`
+	BasicAuth                  BasicAuth        `json:"basic_auth,omitempty"`
+	BlacklistedIps             interface{}      `json:"blacklisted_ips,omitempty"`
+	CacheOptions               CacheOptions     `json:"cache_options,omitempty"`
+	Certificates               interface{}      `json:"certificates,omitempty"`
+	ClientCertificates         interface{}      `json:"client_certificates,omitempty"`
+	ConfigData                 interface{}      `json:"config_data,omitempty"`
+	CORS                       CORS             `json:"CORS,omitempty"`
+	CustomMiddleware           CustomMiddleware `json:"custom_middleware,omitempty"`
+	CustomMiddlewareBundle     string           `json:"custom_middleware_bundle,omitempty"`
+	Definition                 Definition       `json:"definition,omitempty"`
+	DisableQuota               bool             `json:"disable_quota,omitempty"`
+	DisableRateLimit           bool             `json:"disable_rate_limit,omitempty"`
+	DoNotTrack                 bool             `json:"do_not_track,omitempty"`
+	Domain                     string           `json:"domain,omitempty"`
+	DontSetQuotaOnCreate       bool             `json:"dont_set_quota_on_create,omitempty"`
+	EnableBatchRequestSupport  bool             `json:"enable_batch_request_support,omitempty"`
+	EnableContextVars          bool             `json:"enable_context_vars,omitempty"`
+	EnableCoprocessAuth        bool             `json:"enable_coprocess_auth,omitempty"`
+	EnableDetailedRecording    bool             `json:"enable_detailed_recording,omitempty"`
+	EnableIPBlacklisting       bool             `json:"enable_ip_blacklisting,omitempty"`
+	EnableIPWhitelisting       bool             `json:"enable_ip_whitelisting,omitempty"`
+	EnableJwt                  bool             `json:"enable_jwt,omitempty"`
+	EnableProxyProtocol        bool             `json:"enable_proxy_protocol,omitempty"`
+	EnableSignatureChecking    bool             `json:"enable_signature_checking,omitempty"`
+	EventHandlers              EventHandlers    `json:"event_handlers,omitempty"`
+	ExpireAnalyticsAfter       int              `json:"expire_analytics_after,omitempty"`
+	GlobalRateLimit            GlobalRateLimit  `json:"global_rate_limit,omitempty"`
+	Graphql                    GraphQL          `json:"graphql,omitempty"`
+	HmacAllowedAlgorithms      interface{}      `json:"hmac_allowed_algorithms,omitempty"`
+	HmacAllowedClockSkew       int              `json:"hmac_allowed_clock_skew,omitempty"`
+	Internal                   bool             `json:"internal,omitempty"`
+	JwtClientBaseField         string           `json:"jwt_client_base_field,omitempty"`
+	JwtDefaultPolicies         interface{}      `json:"jwt_default_policies,omitempty"`
+	JwtExpiresAtValidationSkew int              `json:"jwt_expires_at_validation_skew,omitempty"`
+	JwtIdentityBaseField       string           `json:"jwt_identity_base_field,omitempty"`
+	JwtIssuedAtValidationSkew  int              `json:"jwt_issued_at_validation_skew,omitempty"`
+	JwtNotBeforeValidationSkew int              `json:"jwt_not_before_validation_skew,omitempty"`
+	JwtPolicyFieldName         string           `json:"jwt_policy_field_name,omitempty"`
+	JwtScopeClaimName          string           `json:"jwt_scope_claim_name,omitempty"`
+	JwtScopeToPolicyMapping    interface{}      `json:"jwt_scope_to_policy_mapping,omitempty"`
+	JwtSigningMethod           string           `json:"jwt_signing_method,omitempty"`
+	JwtSkipKid                 bool             `json:"jwt_skip_kid,omitempty"`
+	JwtSource                  string           `json:"jwt_source,omitempty"`
+	ListenPort                 int              `json:"listen_port,omitempty"`
+	Name                       string           `json:"name,omitempty"`
+	Notifications              Notifications    `json:"notifications,omitempty"`
+	OauthMeta                  OAuthMeta        `json:"oauth_meta,omitempty"`
+	OpenidOptions              OpenIDOptions    `json:"openid_options,omitempty"`
+	OrgID                      string           `json:"org_id,omitempty"`
+	PinnedPublicKeys           interface{}      `json:"pinned_public_keys,omitempty"`
+	Protocol                   string           `json:"protocol,omitempty"`
+	Proxy                      Proxy            `json:"proxy,omitempty"`
+	RequestSigning             RequestSigning   `json:"request_signing,omitempty"`
+	ResponseProcessors         interface{}      `json:"response_processors,omitempty"`
+	SessionLifetime            int              `json:"session_lifetime,omitempty"`
+	SessionProvider            SessionProvider  `json:"session_provider,omitempty"`
+	Slug                       string           `json:"slug,omitempty"`
+	StripAuthData              bool             `json:"strip_auth_data,omitempty"`
+	TagHeaders                 interface{}      `json:"tag_headers,omitempty"`
+	Tags                       interface{}      `json:"tags,omitempty"`
+	UpstreamCertificates       interface{}      `json:"upstream_certificates,omitempty"`
+	UptimeTests                UptimeTests      `json:"uptime_tests,omitempty"`
+	UseBasicAuth               bool             `json:"use_basic_auth,omitempty"`
+	UseGoPluginAuth            bool             `json:"use_go_plugin_auth,omitempty"`
+	UseKeyless                 bool             `json:"use_keyless,omitempty"`
+	UseMutualTLSAuth           bool             `json:"use_mutual_tls_auth,omitempty"`
+	UseOauth2                  bool             `json:"use_oauth2,omitempty"`
+	UseOpenid                  bool             `json:"use_openid,omitempty"`
+	UseStandardAuth            bool             `json:"use_standard_auth,omitempty"`
+	VersionData                VersionData      `json:"version_data,omitempty"`
 }
 
 // CreateAPI creates a new API.
@@ -336,4 +419,10 @@ func (s *APIsService) CreateAPI(opt *CreateAPIOptions) error {
 	}
 
 	return nil
+}
+
+// DeleteAPI removes an API including all associated resources.
+func (s *APIsService) DeleteAPI(id string) error {
+	u := fmt.Sprintf("/apis/%s", id)
+	return s.client.DELETE(u, nil)
 }
