@@ -320,7 +320,7 @@ func (s *APIsService) ListAPIs() ([]*API, error) {
 
 // GetAPI gets a specific API, identified by ID.
 func (s *APIsService) GetAPI(id string) (*API, error) {
-	u := fmt.Sprintf("/api/%s", id)
+	u := fmt.Sprintf("/apis/%s", id)
 
 	p := new(API)
 	err := s.client.GET(u, p)

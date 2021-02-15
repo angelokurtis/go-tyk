@@ -17,7 +17,7 @@ func setup(t *testing.T) (*http.ServeMux, *httptest.Server, *Client) {
 	server := httptest.NewServer(mux)
 
 	// client is the Tyk client being tested.
-	client, err := NewClient("", WithBaseURL(server.URL))
+	client, err := NewClient("", WithBaseURL(server.URL), WithDebug())
 	if err != nil {
 		server.Close()
 		t.Fatalf("failed to create client: %v", err)
