@@ -6,10 +6,10 @@ A client enabling Go programs to interact with Tyk API Gateway in a simple and u
 
 Currently, the following Tyk services are supported:
 
-- [ ] APIs
+- [x] APIs
 - [ ] Cache
 - [ ] Health Checking
-- [ ] Hot Reload
+- [x] Hot Reload
 - [ ] Keys
 - [ ] OAuth Clients
 - [ ] Quotas
