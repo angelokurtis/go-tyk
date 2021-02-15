@@ -4,13 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
-	"github.com/angelokurtis/go-tyk/internal/log"
 	"io"
-	"moul.io/http2curl"
 	"net/http"
 	"net/url"
 	"path"
 	"strings"
+
+	"github.com/angelokurtis/go-tyk/internal/log"
+
+	"moul.io/http2curl"
 )
 
 const (
@@ -114,6 +116,10 @@ func (c *Client) POST(path string, resp interface{}, payload interface{}) error 
 
 func (c *Client) PUT(path string, resp interface{}, payload interface{}) error {
 	return c.makeRequest("PUT", path, resp, payload)
+}
+
+func (c *Client) DELETE(path string, resp interface{}) error {
+	return c.makeRequest("DELETE", path, resp, nil)
 }
 
 func (c *Client) makeRequest(method, p string, resp interface{}, payload interface{}) error {
