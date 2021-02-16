@@ -16,3 +16,31 @@ Currently, the following Tyk services are supported:
 - [ ] Keys
 - [ ] OAuth Clients
 - [ ] Quotas
+
+## Usage
+
+```go
+import "github.com/angelokurtis/go-tyk"
+```
+
+Construct a new Tyk client, then use the various services on the client to access different parts of the Tyk API. For
+example, to list all APIs:
+
+```go
+client, err := tyk.NewClient("your_token")
+if err != nil {
+    log.Fatalf("Failed to create client: %v", err)
+}
+apis, err := client.APIs.ListAPIs()
+```
+
+There are a few `With...` option functions that can be used to customize the API client. For example, to enable debug
+logging:
+
+```go
+client, err := tyk.NewClient("your_token", tyk.WithDebug())
+if err != nil {
+    log.Fatalf("Failed to create client: %v", err)
+}
+status, err := client.HotReload.ReloadGroup()
+```
