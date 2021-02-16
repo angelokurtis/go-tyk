@@ -2,6 +2,7 @@
 
 A client enabling Go programs to interact with Tyk API Gateway in a simple and uniform way
 
+[![GoDoc](https://godoc.org/github.com/angelokurtis/go-tyk?status.svg)](https://godoc.org/github.com/angelokurtis/go-tyk)
 [![Go Report Card](https://goreportcard.com/badge/github.com/angelokurtis/go-tyk)](https://goreportcard.com/report/github.com/angelokurtis/go-tyk)
 
 ## Coverage
